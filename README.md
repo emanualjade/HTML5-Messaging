@@ -1,7 +1,7 @@
 HTML5-Messaging
 ===============
 
-Pretty much it's just sending data from one place to somewhere else
+Pretty much it's just sending data from one place to somewhere else.
 
 * CORS
 * JSONP
