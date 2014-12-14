@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>xhr2</title>
+</head>
+<body>
+  <ul>
+    <li>Simple Request</li>
+    <li>Set request timeouts</li>
+    <li>Better manage data with FormData objects</li>
+    <li>Make safer cross-origin requests</li>
+    <li>Override the media type and encoding of responses.</li>
+    <li>Transfer binary data</li>
+    <li>Monitor the progress of data transfers</li>
+  </ul>
+  <script>
+
+    // MAKE A SIMPLE AJAX REQUEST
+    onLoadHandler = function(event) {
+      if (request.status >= 200 && request.status < 400){
+        data = JSON.parse(request.responseText);
+        console.log(data.name);
+      } else {
+        // We reached our target server, but it returned an error
+      }
+    };
+
+    onTimeOutHandler = function(event){
+      console.log('attempt timed out trying again');
+      event.target.open('GET', 'data.json');
+      // Optionally, set a longer timeout to override the original.
+      event.target.timeout = 6000;
+      event.target.send();
+    };
+
+    request = new XMLHttpRequest();
+    request.open('GET', 'data.json', true);
+    request.onload = onLoadHandler;
+    request.ontimeout = onTimeOutHandler;
+    request.timeout = 3000;
+    request.send();
+
+  </script>
+
+</body>
+</html>

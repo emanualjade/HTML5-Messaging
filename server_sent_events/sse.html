@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="chrome=1" />
+<title>HTML5 Server-Sent Test</title>
+</head>
+<body>
+
+<script>
+
+// sse.php sends messages with text/event-stream mimetype.
+var source = new EventSource('sse.php');
+
+function closeConnection() {
+  source.close();
+  console.log('> Connection was closed');
+}
+
+source.addEventListener('message', function(event) {
+  var data = JSON.parse(event.data);
+
+  var d = new Date(data.msg * 1e3);
+  var timeStr = [d.getHours(), d.getMinutes(), d.getSeconds()].join(':');
+
+  console.log('lastEventID: ' + event.lastEventId +
+             ', server time: ' + timeStr, 'msg');
+}, false);
+
+source.addEventListener('open', function(event) {
+  console.log('> Connection was opened');
+}, false);
+
+source.addEventListener('error', function(event) {
+  if (event.eventPhase == 2) { //EventSource.CLOSED
+    console.log('> Connection was closed');
+  }
+}, false);
+
+
+</script>
+</body>
+</html>

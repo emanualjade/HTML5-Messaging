@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>WebWorkers</title>
+</head>
+<body>
+
+<script>
+  var worker = new Worker('worker.js');
+
+  worker.postMessage({'question':'how are you?','askedBy':'Parent'});
+
+  worker.addEventListener('message',function(e){
+
+    if(e.data.type == 'info'){
+      console.log('Got answer: ' + e.data.answer + ' from: ' + e.data.answerer);
+      console.log('From external file one: ' + e.data.externalMessage1);
+      console.log('From external file two: ' + e.data.externalMessage2);
+    }
+
+    if(e.data.type == 'timer'){
+      console.log(e.data.timeMessage);
+    }
+
+  }, false);
+
+  worker.addEventListener('error',function(e) {
+    console.log('Error occurred at line: ' + e.lineno + ' in file ' + e.filename);
+  }, false);
+
+  setTimeout(function(){
+    worker.terminate();
+  }, 6000);
+</script>
+</body>
+</html>

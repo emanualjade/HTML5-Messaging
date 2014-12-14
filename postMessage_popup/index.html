@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cross Document Messaging</title>
+</head>
+<body>
+<h1>Cross Document Messaging</h1>
+
+<script>
+
+var popup = window.open("popup.html");
+
+function sendMessage(){
+  popup.postMessage("hello there!", "http://localhost:8000");
+}
+
+function receiveMessage(event){
+  if (event.origin !== "http://localhost:8000"){
+    return;
+  }
+  // check to see if popup window is ready
+  if(event.data.type == 'ready'){
+    sendMessage();
+  }else{
+    console.log(event.origin)
+    console.log(event.source);
+    console.log(event.data.myMessage);
+  }
+
+}
+window.addEventListener("message", receiveMessage, false);
+</script>
+</body>
+</html>

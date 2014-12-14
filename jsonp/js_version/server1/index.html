@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Raw JS JSONP</title>
+</head>
+<body>
+  <script>
+    window.jsonpCallback = function(json){
+      alert("We've got a response! this title is " + json.title);
+    };
+    var script = document.createElement('script');
+    script.async = true;
+    script.src = 'http://localhost:8080/data.php?callback=jsonpCallback';
+    document.body.appendChild(script);
+  </script>
+</body>
+</html>

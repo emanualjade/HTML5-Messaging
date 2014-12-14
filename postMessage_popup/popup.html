@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Popup Window</title>
+</head>
+<body>
+  <h1>Popup Window</h1>
+  <div id="origin-container"></div>
+  <div id="source-container"></div>
+  <div id="data-container"></div>
+  <script>
+
+  // detect readiness of popup window and notify main window
+  var loadHandler = function(event){
+    event.currentTarget.opener.postMessage({'type': 'ready'},'http://localhost:8000');
+  }
+  window.addEventListener('DOMContentLoaded', loadHandler, false);
+
+
+  function receiveMessage(event){
+
+    if (event.origin !== "http://localhost:8000"){
+      return;
+    }
+    document.getElementById('origin-container').innerHTML = event.origin;
+    document.getElementById('source-container').innerHTML = event.source;
+    document.getElementById('data-container').innerHTML = event.data;
+
+    event.source.postMessage({
+      "type": "messaging",
+      "myMessage" : "hi there yourself! the secret response is: rheeeeet!"
+    }, event.origin);
+  }
+
+  window.addEventListener("message", receiveMessage, false);
+  </script>
+
+</body>
+</html>

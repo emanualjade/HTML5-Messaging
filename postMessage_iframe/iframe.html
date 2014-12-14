@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>Does work</title>
+  <script>
+  window.addEventListener("message", receiveMessage, false);
+  function receiveMessage(event) {
+    if(event.origin !== "http://localhost:8000"){
+      return;
+    }
+    document.write(event.data);
+    document.write(JSON.stringify(event));
+    document.write(typeof event);
+    document.close();
+    console.log('received');
+
+  }
+  </script>
+</head>
+<body>
+  <p>iframe is cool</p>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>jsonp with jquery</title>
+</head>
+<body>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script>
+  $.getJSON(
+    'http://localhost:8080/data.php?jsoncallback=?',
+    function(returnData){
+      console.log(returnData);
+    }
+  );
+
+  $.ajax({
+    url: "http://localhost:8080/data.php",
+    jsonp: "jsoncallback",
+    dataType: "jsonp",
+    success: function( response ) {
+      console.log( response );
+    }
+  });
+
+  </script>
+</body>
+</html>

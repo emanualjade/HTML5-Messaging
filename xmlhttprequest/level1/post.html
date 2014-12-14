@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ajax Post</title>
+</head>
+<body>
+
+<script>
+  var msg = 'field1=foo&field2=bar';
+  var request = new XMLHttpRequest();
+  request.open('POST', '/post_processing.php', true);
+  request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+  request.send(msg);
+
+  request.onreadystatechange = function() {
+    if (this.readyState === 4){
+      if (this.status >= 200 && this.status < 400){
+        // Success!
+        data = this.responseText;
+        console.log(data)
+      } else {
+        // Error :(
+      }
+    }
+  };
+</script>
+</body>
+</html>

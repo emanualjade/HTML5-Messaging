@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Handling Request Events</title>
+</head>
+<body>
+  <div id="divText"></div>
+
+  <script>
+   var html = "";
+
+   var client = new XMLHttpRequest();
+
+   /* Event handlers */
+   client.onloadstart = onloadstarthandler;
+   client.onprogress = onprogresshandler;
+   client.onabort = onaborthandler;
+   client.onerror = onerrorhandler;
+   client.onload = onloadhandler;
+   client.ontimeout = ontimeouthandler;
+   client.onloadend = onloadendhandler;
+   client.onreadystatechange = onreadystatechangehandler;
+
+   /* Assign request type and server path */
+   client.open("GET", "video_sample.mp4");
+   client.send();
+
+    /* When the request begins */
+   function onloadstarthandler(e)
+   {
+      html += "onloadstart<br/>";
+      document.getElementById("divText").innerHTML = html;
+   }
+
+   /* When the request is in progress */
+   function onprogresshandler(e)
+   {
+      html += "onprogress<br/>";
+      document.getElementById("divText").innerHTML = html;
+   }
+
+   /* When the client cancels the request */
+   function onaborthandler(e)
+   {
+      html += "onabort<br/>";
+      document.getElementById("divText").innerHTML = html;
+   }
+
+   /* When server exception occurs */
+   function onerrorhandler(e)
+   {
+      html += "onerror<br/>";
+      document.getElementById("divText").innerHTML = html;
+   }
+
+   /* When the request is successfully terminated */
+   function onloadhandler(e)
+   {
+      html += "onload<br/>";
+      document.getElementById("divText").innerHTML = html;
+   }
+
+   /* When a timeout occurs */
+   function ontimeouthandler(e)
+   {
+      html += "ontimeout<br/>";
+      document.getElementById("divText").innerHTML = html;
+   }
+
+    /* When request is terminated regardless of success or failure */
+   function onloadendhandler(e)
+   {
+      html += "onloadend<br/>";
+      document.getElementById("divText").innerHTML = html;
+   }
+
+   /* Checks current progress based on a random repetition period */
+   function onreadystatechangehandler(e)
+   {
+      html += "onreadystate<br/>";
+      document.getElementById("divText").innerHTML = html;
+   }
+
+  </script>
+
+</body>
+</html>

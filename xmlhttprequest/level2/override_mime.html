@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="UTF-8">
+  <title>XHR 2 Demo: Overriding the MIME Type</title>
+
+</head>
+<body>
+
+<h1>XMLHttpRequest 2 Demo: Overriding the MIME Type</h1>
+
+
+<section id="demo">
+<p>Click the button to trigger the <code>overrideMimeType()</code> demo.</p>
+
+<p>Notice that the <code>Content-Type:</code> response header is <code>text/html; charset=UTF-8</code>, but we have actually requested an XML file. We are going to force the browser to treat the response as XML.</p>
+
+<button type="submit" id="trigger">Make request</button>
+
+
+<h2>Response headers</h2>
+<pre id="headers"></pre>
+
+<h2><code>responseXML</code></h2>
+<div id="results"></div>
+
+
+</section>
+
+<script>
+function makeRequest(event){
+  event.preventDefault();
+
+  var xhr, onLoadHandler, results, headers;
+
+  headers = document.querySelector('#headers');
+  results = document.querySelector('#results');
+
+  onLoadHandler = function(event){
+    var i, xhr = event.target;
+    headers.innerHTML = xhr.getAllResponseHeaders();
+    results.innerHTML = xhr.responseXML;
+  }
+
+  xhr = new XMLHttpRequest();
+  xhr.open('GET','xhr-overridemimetype.data.html',true);
+  xhr.onload = onLoadHandler;
+
+  // forces this to be XML instead of HTML
+  xhr.overrideMimeType('text/xml');
+  xhr.send(null);
+}
+
+var trigger = document.getElementById('trigger');
+trigger.addEventListener('click', makeRequest, false);
+</script>
+
+
+</body>
+</html>

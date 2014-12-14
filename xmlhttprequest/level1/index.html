@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Xhr level one</title>
+</head>
+<body>
+
+  <script>
+    request = new XMLHttpRequest();
+    request.open('GET', 'data.json', true);
+
+    request.onreadystatechange = function() {
+      if (this.readyState === 4){
+        if (this.status >= 200 && this.status < 400){
+          // Success!
+          data = JSON.parse(this.responseText);
+          console.log(data.name)
+        } else {
+          // Error :(
+        }
+      }
+    };
+
+    request.send();
+    request = null;
+  </script>
+</body>
+</html>

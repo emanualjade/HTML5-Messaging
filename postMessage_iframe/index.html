@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>postMessage with iframe</title>
+</head>
+<body>
+  <script>
+  function loadiframe (callback) {
+    var body = document.getElementsByTagName('body')[0];
+    var iframe = document.createElement('iframe');
+    iframe.id = 'iframe';
+    iframe.seamless = 'seamless';
+    iframe.src = 'http://localhost:8000/iframe.html';
+    body.appendChild(iframe);
+    window.setTimeout(callback, 1000);
+  }
+
+  loadiframe(function() {
+      cpframe = document.getElementById('iframe').contentWindow;
+      cpframe.postMessage('please get this message','*');
+      console.log('posted');
+  })
+</script>
+</body>
+</html>

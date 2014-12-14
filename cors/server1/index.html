@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CORS</title>
+</head>
+<body>
+<h1>CORS Server One</h1>
+<p>https://remysharp.com/2011/04/21/getting-cors-working</p>
+<p>http://www.html5rocks.com/en/tutorials/cors/</p>
+<p>http://enable-cors.org/</p>
+<p>https://github.com/monsur/CORSinAction</p>
+
+<script>
+
+  //** XMLHttpRequest **//
+  // onreadystatechange - XMLHttpRequest object had only one event handler which handled all responses
+
+  //** XMLHttpRequest2 **//
+  // onloadstart - When the request starts.
+  // onprogress - While loading and sending data. IE supported
+  // onabort - When the request has been aborted. For instance, by invoking the abort() method.
+  // onerror - When the request has failed. IE supported
+  // onload - When the request has successfully completed. IE supported
+  // ontimeout - When the author specified timeout has passed before the request could complete. IE supported
+  // onloadend - When the request has completed (either in success or failure).
+
+  //** withCredentials **//
+  // The .withCredentials property will include any cookies from the remote domain in the request, and it will also set any cookies from the remote domain. Note that these cookies still honor same-origin policies, so your JavaScript code can’t access the cookies from document.cookie or the response headers. They can only be controlled by the remote domain.
+  // xhr.withCredentials = true; - client side
+  // Access-Control-Allow-Credentials: true - server side
+
+  // EXAMPLE ONE
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'http://localhost:8080');
+  xhr.onreadystatechange = function () {
+    if (this.status == 200 && this.readyState == 4) {
+      console.log('response example one: ' + this.responseText);
+    }
+  };
+  xhr.send();
+
+
+
+  // EXAMPLE TWO
+  function createCORSRequest(method, url) {
+    var xhr = new XMLHttpRequest();
+
+    if ("withCredentials" in xhr) {
+      // Check if the XMLHttpRequest object has a "withCredentials" property.
+      // "withCredentials" only exists on XMLHTTPRequest2 objects.
+      xhr.open(method, url, true);
+    } else if (typeof XDomainRequest != "undefined") {
+      // Otherwise, check if XDomainRequest.
+      // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
+      xhr = new XDomainRequest();
+      xhr.open(method, url);
+    } else {
+      // Otherwise, CORS is not supported by the browser.
+      xhr = null;
+    }
+    return xhr;
+  }
+
+  var url = 'http://localhost:8080'
+  var xhr_example_2 = createCORSRequest('GET', url);
+  if (!xhr_example_2) {
+    throw new Error('CORS not supported');
+  }
+  xhr_example_2.onreadystatechange = function () {
+    if (this.status == 200 && this.readyState == 4) {
+      console.log('response example two: ' + this.responseText);
+    }
+  };
+  xhr_example_2.send();
+
+
+
+</script>
+</body>
+</html>
